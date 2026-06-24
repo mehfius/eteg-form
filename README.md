@@ -37,6 +37,16 @@ Possui um pipeline completo no **GitHub Actions** (`.github/workflows/pipeline.y
 3. **Registry:** Faz o push automático das imagens geradas para o **GitHub Container Registry (GHCR)**.
 4. **Deploy Remoto (AWS):** Conecta-se via SSH a uma instância na nuvem e orquestra o `docker compose pull` e `up -d` com Zero Downtime.
 
+## 🌟 Além do Básico (Extra Mile)
+
+Embora o teste técnico tenha solicitado os requisitos fundamentais para o funcionamento da aplicação, este projeto foi construído pensando no cenário real de uma **Pessoa Desenvolvedora Sênior**, adicionando características arquiteturais avançadas não solicitadas inicialmente:
+
+- **Hospedagem em Nuvem (AWS EC2 + Cloudflare):** O projeto não roda apenas no localhost. Ele está provisionado e acessível publicamente através de uma URL customizada (`eteg.mehfi.us`), com túnel seguro e certificado SSL gerenciado.
+- **Integração e Entrega Contínuas (CI/CD):** Foi construída uma pipeline completa no **GitHub Actions** que faz o build otimizado multi-stage das imagens Docker, publica no GitHub Container Registry (GHCR) e dispara via SSH o deploy (pull/up) na máquina EC2 automaticamente após cada commit na branch `main`.
+- **End-to-End Type Safety com Zod:** Utilização do Zod para garantir que tanto o frontend quanto o backend usem as mesmas regras estritas de validação. O uso de um pacote `shared` no monorepo previne dessincronização entre as pontas.
+- **Performance e Segurança Avançada:** O uso de **Fastify** ao invés do Express tradicional para maior throughput, acoplado a validações rígidas de payloads para mitigar vulnerabilidades comuns (Injections/Bad Requests).
+- **Design UI/UX Premium:** Ao invés de um formulário genérico, foi aplicado um design rico, moderno e responsivo, utilizando *Glassmorphism* e micro-interações fluídas (via `framer-motion`) para uma experiência de usuário superior, indo além de um "MVP seco".
+
 ## 💻 Como rodar o projeto localmente
 
 ### Requisitos:
