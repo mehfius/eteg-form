@@ -22,8 +22,8 @@ jobs:
     - name: Install dependencies
       run: npm install
       
-    - name: Build frontend
-      run: cd frontend && npm run build
+    - name: Build app
+      run: cd app && npm run build
       
-    - name: Check types in backend
-      run: cd backend && npx tsc --noEmit
+    - name: Check types in api
+      run: cd api && npx tsc --noEmit
