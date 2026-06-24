@@ -1,4 +1,4 @@
-# Eteg Form - Teste Técnico John Doe
+# Eteg Form - Teste Técnico
 
 ![Eteg Application](https://img.shields.io/badge/Status-Online-success)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
@@ -7,7 +7,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 
-Solução ponta a ponta desenvolvida para o teste técnico de desenvolvedor sênior da Eteg, atendendo perfeitamente aos requisitos de produto definidos no caso de uso do "John Doe".
+Solução ponta a ponta desenvolvida para o teste técnico de desenvolvedor sênior da Eteg, atendendo perfeitamente aos requisitos de produto definidos no caso de uso
 
 🌍 **Live Demo:** [https://eteg.mehfi.us](https://eteg.mehfi.us)
 
