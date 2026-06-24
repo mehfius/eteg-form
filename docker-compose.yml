@@ -12,6 +12,11 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eteg -d eteg_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   api:
     build: 
@@ -24,7 +29,8 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   app:
     build: 
