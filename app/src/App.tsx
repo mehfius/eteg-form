@@ -44,11 +44,14 @@ function App() {
       toast.success('Cadastro realizado com sucesso!');
       reset();
     } catch (error: any) {
-      if (axios.isAxiosError(error) && error.response?.data?.message || error.response?.data?.error) {
-        toast.error(error.response.data.message || error.response.data.error);
-      } else {
-        toast.error('Ocorreu um erro inesperado. Tente novamente.');
+      if (axios.isAxiosError(error) && error.response?.data) {
+        const msg = error.response.data.message || error.response.data.error;
+        if (msg) {
+          toast.error(msg);
+          return;
+        }
       }
+      toast.error('Ocorreu um erro inesperado. Tente novamente.');
     }
   };
 
@@ -76,7 +79,6 @@ function App() {
       <Toaster position="top-right" />
       
       <div className="grid-layout">
-        {/* Hero Section */}
         <motion.div 
           initial={{ x: -50, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
@@ -94,7 +96,6 @@ function App() {
           </div>
         </motion.div>
 
-        {/* Form Section */}
         <motion.div 
           initial={{ x: 50, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
