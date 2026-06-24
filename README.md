@@ -1,4 +1,4 @@
-# Desafio Técnico: Eteg Form VIP
+# Desafio Técnico: Eteg Form
 
 Este projeto foi construído para atender aos requisitos de avaliação técnica para a vaga de Desenvolvedor Sênior, focando em simplicidade, eficiência, segurança e arquitetura escalável, evitando *over-engineering* desnecessário.
 

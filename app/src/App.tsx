@@ -82,7 +82,7 @@ function App() {
           animate={{ x: 0, opacity: 1 }} 
           className="hero-section"
         >
-          <h1 className="hero-title">Acesso VIP <br/><span className="text-gradient">Eteg</span></h1>
+          <h1 className="hero-title">Acesso<br/><span className="text-gradient">Eteg</span></h1>
           <p className="hero-subtitle">
             Faça parte da nossa lista exclusiva e tenha acesso a benefícios únicos.
             Preencha o formulário e garanta o seu lugar.
