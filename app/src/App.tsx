@@ -44,8 +44,8 @@ function App() {
       toast.success('Cadastro realizado com sucesso!');
       reset();
     } catch (error: any) {
-      if (axios.isAxiosError(error) && error.response?.data?.error) {
-        toast.error(error.response.data.error);
+      if (axios.isAxiosError(error) && error.response?.data?.message || error.response?.data?.error) {
+        toast.error(error.response.data.message || error.response.data.error);
       } else {
         toast.error('Ocorreu um erro inesperado. Tente novamente.');
       }
