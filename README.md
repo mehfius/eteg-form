@@ -1,41 +1,84 @@
-# Desafio Técnico: Eteg Form
+# Eteg Form - Teste Técnico John Doe
 
-Este projeto foi construído para atender aos requisitos de avaliação técnica para a vaga de Desenvolvedor Sênior, focando em simplicidade, eficiência, segurança e arquitetura escalável, evitando *over-engineering* desnecessário.
+![Eteg Application](https://img.shields.io/badge/Status-Online-success)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat&logo=node.js&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 
-## Visão Geral da Arquitetura
+Solução ponta a ponta desenvolvida para o teste técnico de desenvolvedor sênior da Eteg, atendendo perfeitamente aos requisitos de produto definidos no caso de uso do "John Doe".
 
-O projeto é estruturado em um **Monorepo**, garantindo *End-to-End Type Safety*. A validação de dados é escrita uma única vez (via `zod`) no pacote `shared` e consumida nativamente tanto pelo formulário React quanto pela API Node.js.
+🌍 **Live Demo:** [https://eteg.mehfi.us](https://eteg.mehfi.us)
 
-- **Frontend:** React + Vite + TypeScript. UI responsiva e moderna com estilização CSS pura (Glassmorphism e tipografia limpa). Uso intensivo de `react-hook-form` para validação em tempo real e `framer-motion` para transições de estado (ex: tela de sucesso). As chamadas de API são feitas de forma agnóstica via proxy `/api`, garantindo total portabilidade da imagem Docker.
-- **Backend:** Fastify + TypeScript + Prisma ORM. Escolha feita pela alta performance do Fastify e sua capacidade de integrar provedores de tipos nativos (`fastify-type-provider-zod`). Isso significa que a validação de Schema (Zod) gera erros HTTP 400 automaticamente sem necessidade de *ifs* manuais. Inclui middlewares de segurança (`@fastify/helmet`) e Rate Limiting contra ataques de força bruta.
-- **Banco de Dados:** PostgreSQL com esquema normalizado. A unicidade de CPF e Email é garantida por *constraints* a nível de banco, além de validações ativas de backend e frontend.
-- **Segurança e Validação Avançada:** O Zod utiliza um `.refine` matemático avançado para validar os dígitos verificadores reais do CPF (não apenas uma simples máscara ou regex).
-- **Documentação Automática:** O Swagger / OpenAPI é gerado dinamicamente a partir dos Schemas do Zod que validam a API, servido em `/docs`.
+## 📌 O Desafio
+O objetivo do projeto era construir um formulário de cadastro de clientes que coletasse nome, CPF, e-mail, observações e uma cor favorita baseada em um arco-íris (com flexibilidade para mudança futura). O cadastro deve ser único por cliente (sem duplicação de CPF/Email) e possuir feedback visual do resultado.
 
-## Decisões Técnicas e Maturidade
+A arquitetura precisaria ser robusta, utilizando **TypeScript, React e Node.js**, armazenando os dados em um banco **PostgreSQL** hospedado em **Docker**, com o código estruturado em um único repositório (monorepo).
 
-- **Monorepo:** Facilita a manutenção do contrato de dados entre Client e Server, demonstrando fluência avançada no ecossistema TypeScript.
-- **Infraestrutura Docker:** Separação de containers com Dockerfiles *Multi-stage*, gerando uma imagem de produção do Frontend muito enxuta (servida por Nginx) e uma imagem de Backend isolada.
-- **Proxy Reverso:** O Nginx atua como servidor web do React e faz o *proxy_pass* inteligente para a API, eliminando problemas de CORS.
-- **CI/CD & Code Quality:** Configurações base sólidas com `.eslintrc.js`, `.prettierrc` e um workflow no Github Actions `.github/workflows/ci.yml` para validação contínua.
+## 🚀 Arquitetura da Solução
 
-## Como Rodar Localmente (Via Docker)
+O projeto foi construído utilizando uma abordagem de **Monorepo** gerenciado pelo `pnpm`, separando as responsabilidades de forma clara e escalável:
 
-Este projeto foi desenhado para rodar com um único comando na máquina, sendo 100% portável.
+- **`/app`** (Frontend): Desenvolvido em **React + Vite**, utilizando `react-hook-form` e `zod` para validações na interface, estilizado com CSS Vanilla de alta qualidade com animações (`framer-motion`), provendo uma interface rápida e premium.
+- **`/api`** (Backend): Desenvolvido em **Node.js + Fastify**, com integração ao banco de dados via **Prisma ORM**. Focado em alta performance e segurança.
+- **`/packages/shared`** (Código Compartilhado): Contém os schemas de validação do **Zod** e tipagens, garantindo que o Frontend e o Backend validem e falem a exata mesma língua (End-to-End Type Safety).
 
-1. Clone este repositório.
-2. Na raiz do projeto, execute:
-```bash
-docker compose up --build -d
+### Banco de Dados (Cores Dinâmicas)
+Para satisfazer a regra de negócio *"as cores do arco-íris podem mudar posteriormente"*, a lista de cores não está *hardcoded* no Frontend. O Prisma no Backend possui um modelo `Color` que é populado na inicialização do banco (`seed.ts`), e o Frontend busca ativamente essas opções via API (`GET /api/colors`).
+
+## 🛠️ Deploy Contínuo & Infraestrutura (CI/CD)
+
+Pensando em nível Sênior, o projeto não é apenas um código, mas um sistema vivo.
+Possui um pipeline completo no **GitHub Actions** (`.github/workflows/pipeline.yml`) que:
+
+1. **Validação:** Garante o build do projeto limpo.
+2. **Build de Imagens:** Constrói as imagens Docker (`api` e `app`) usando Dockerfiles otimizados multi-stage.
+3. **Registry:** Faz o push automático das imagens geradas para o **GitHub Container Registry (GHCR)**.
+4. **Deploy Remoto (AWS):** Conecta-se via SSH a uma instância na nuvem e orquestra o `docker compose pull` e `up -d` com Zero Downtime.
+
+## 💻 Como rodar o projeto localmente
+
+### Requisitos:
+- Docker e Docker Compose instalados.
+
+### Passos:
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/mehfius/eteg-form.git
+   cd eteg-form
+   ```
+
+2. Suba o ambiente via Docker Compose:
+   ```bash
+   docker compose up -d
+   ```
+   *Este comando iniciará os 3 containers: o Banco PostgreSQL, o Backend e o Frontend.*
+
+3. Acesse no navegador:
+   - **Frontend:** http://localhost:80
+   - **API (Backend):** http://localhost:3000
+
+## 📂 Estrutura do Monorepo
+
 ```
-3. O Backend rodará as migrations e o *Seed* populando as cores do banco de dados automaticamente.
-4. Acesse a aplicação Frontend em: **`http://localhost:8080`**
-5. Acesse a documentação interativa Swagger (OpenAPI) em: **`http://localhost:3000/docs`**
+eteg-form/
+├── app/                  # Frontend em React + Vite
+│   ├── src/              
+│   ├── Dockerfile        # Dockerfile otimizado com Nginx
+│   └── package.json
+├── api/                  # Backend em Node.js + Fastify
+│   ├── prisma/           # Schema e Seed do banco de dados
+│   ├── src/              
+│   ├── Dockerfile        
+│   └── package.json
+├── packages/             
+│   └── shared/           # Schemas do Zod compartilhados
+├── .github/workflows/    # Pipeline de CI/CD
+├── docker-compose.yml    # Orquestração local (Build direto do fonte)
+├── docker-compose.prod.yml # Orquestração de produção (Puxa do GHCR)
+└── pnpm-workspace.yaml   # Configuração do Monorepo
+```
 
-## Estrutura do Projeto
-
-- `/packages/shared`: Schemas de validação reais e tipos unificados.
-- `/backend`: API REST (Fastify, Prisma).
-- `/frontend`: Aplicação SPA (React, Vite).
-- `/docker-compose.yml`: Orquestração de containers.
-- `.github/workflows/`: Pipeline de CI base.
+---
+Feito com ☕ e muito código.
