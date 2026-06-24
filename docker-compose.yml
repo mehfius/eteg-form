@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: eteg_db
+    environment:
+      POSTGRES_USER: eteg
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: eteg_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build: 
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: eteg_api
+    environment:
+      DATABASE_URL: postgresql://eteg:admin@db:5432/eteg_db?schema=public
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  app:
+    build: 
+      context: .
+      dockerfile: app/Dockerfile
+    container_name: eteg_app
+    environment:
+      VITE_API_URL: /api
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

@@ -1,0 +1,9 @@
+{
+  "name": "eteg-form",
+  "private": true,
+  "workspaces": [
+    "app",
+    "api",
+    "packages/*"
+  ]
+}
