@@ -72,6 +72,9 @@ server.post('/api/clients', {
         id: z.string(),
         fullName: z.string(),
         email: z.string()
+      }),
+      400: z.object({
+        message: z.string()
       })
     }
   }

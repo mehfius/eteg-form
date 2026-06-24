@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node:20-slim AS builder
+FROM node:24-slim AS builder
 
 WORKDIR /app
 RUN apt-get update -y && apt-get install -y openssl
@@ -19,7 +19,7 @@ WORKDIR /app/api
 RUN npx prisma generate
 
 # Stage 2: Produção
-FROM node:20-slim
+FROM node:24-slim
 
 WORKDIR /app
 RUN apt-get update -y && apt-get install -y openssl
