@@ -89,6 +89,3 @@ eteg-form/
 ├── docker-compose.prod.yml # Orquestração de produção (Puxa do GHCR)
 └── pnpm-workspace.yaml   # Configuração do Monorepo
 ```
-
----
-Feito com ☕ e muito código.
