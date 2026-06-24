@@ -15,9 +15,14 @@ const colors = [
 async function main() {
   console.log('Seeding colors...');
   for (const color of colors) {
-    await prisma.color.create({
-      data: color,
+    const existing = await prisma.color.findFirst({
+      where: { name: color.name }
     });
+    if (!existing) {
+      await prisma.color.create({
+        data: color,
+      });
+    }
   }
   console.log('Seeding finished.');
 }
